@@ -2,33 +2,43 @@
     assuming that interest is compounded monthly. '''
 
 import os
+import json
+
+with open('loan_calculator_messages.json', 'r', encoding='utf-8') as file:
+    MESSAGES = json.load(file)
 
 def validate_input_data(prompt):
-    ''' validates the user input to make sure that it's a float value that is non-zero '''
+    ''' validates the user input to make sure that it's a float value that is non-zero. '''
     while True:
         try:
-            val = float(input(f'Please Enter the {prompt} : '))
-            if val > 0:
+            val = float(input(prompt))
+            if val >= 0 and val != float('inf'):
                 break
+
         except ValueError:
-            print("Incorrect Input, Try Again!")
+            print(MESSAGES["error_message"])
 
     return val
 
-def loan_duration_validation(prompt):
-    ''' takes the duration as a float and splits it into years and months, 
-    it then converts that value into months, for example: 3.5 years is converted into 41 months. '''
-    duration = validate_input_data(prompt)
-    duration_str = f"{duration:.2f}"
-    duration , months = duration_str.split('.')
-    months = int(months)
-    if months < 10:
-        months = 0
-    if months > 11 and months % 10 == 0 :
-        months = int(months / 10)
+def loan_duration_validation(prompt1, prompt2):
+    ''' validates the user input to make sure that the duration is valid '''
+    while True:
+        try:
+            years = int(input(prompt1))
+            months = int(input(prompt2))
+            if years == 0 and months == 0:
+                print("Both month(s) and year(s) cannot be 0!")
+                print(MESSAGES['error_message'])
+                continue
+            if years >= 0 or months >= 0:
+                break
 
-    loan_duration = (int(duration) * 12) + months
-    return loan_duration
+        except ValueError:
+            print(MESSAGES['error_message'])
+
+    duration = (years * 12) + months
+    print(duration)
+    return duration
 
 def calculate_monthly_amount(func_loan_amount, func_annual_percentage_rate, \
                              func_loan_duration_months):
@@ -41,24 +51,24 @@ def calculate_monthly_amount(func_loan_amount, func_annual_percentage_rate, \
     return monthly_payment
 
 while True:
-    print("\n Welcome to the Loan Calculator \n")
-    loan_amount = validate_input_data("Loan Amount")
-    annual_percentage_rate = validate_input_data("Annual Percentage Rate (as '%' only, for " +
-                                                "example 5 for 5% and 5.5 for 5.5%)")
-    loan_duration_months = loan_duration_validation("Loan Duration (in years), " +
-                                                    "for example 3 years 4 months as 3.4")
-    monthly_payment_amount = calculate_monthly_amount(loan_amount, annual_percentage_rate, \
-                                               loan_duration_months)
+    print(MESSAGES["welcome"])
+    loan_amount = validate_input_data(MESSAGES["loan_amount"])
+    annual_percentage_rate = validate_input_data(MESSAGES["annual_percentage"])
+    loan_duration_months = loan_duration_validation(
+                                                    MESSAGES["duration_years"],
+                                                    MESSAGES["duration_months"])
+    monthly_payment_amount = calculate_monthly_amount(loan_amount, annual_percentage_rate,
+                                                      loan_duration_months)
     print(f'Your monthly payment amount is : ${monthly_payment_amount}')
-    choice = input("Do you want to perform another calculation (y/n)? ")
-    choice = choice.lower()
     choice_options = ['y', 'yes', 'yep', 'n', 'no', 'nope']
-    while choice not in choice_options:
-        print("Incorrect Input, Try Again")
-        choice = input("Do you want to perform another calculation (y/n)? ")
+    while True:
+        choice = input(MESSAGES["choice"])
         choice = choice.lower()
+        os.system('cls')
+        if choice not in choice_options:
+            print("Incorrect Input, Try Again")
+        else:
+            break
 
     if choice[0] == 'n':
         break
-
-    os.system('clear')

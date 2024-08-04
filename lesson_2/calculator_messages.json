@@ -1,0 +1,23 @@
+{
+    "lang": "Choose your language:\n1) English (en/e)\n2) Urdu (ur/u)\n",
+    "en": {
+      "welcome": "\n Welcome to Calculator \n",
+      "invalid_number": "Incorrect Value, Try Again!",
+      "number_1": "Enter the first number : ",
+      "number_2": "Enter the second number : ",
+      "operation_prompt": "Select the operation you'd like to perform?\n1) Add (+)\n2) Subtract (-)\n3) Multiply (x)\n4) Divide (/)\n(You can either write operation number, or symbol, for example to perfrom Addition (Add) you can type 1 or +) : ",
+      "invalid_operation": "Invalid Option, Try Again! ",
+      "another_operation": "Would you like to perform another calculation? (y/n) ",
+      "result": "The result is {answer}"
+    },
+    "ur": {
+      "welcome": "\n Calculator Mein Khushaamdid\n",
+      "invalid_number": "Number ghalat hai, dobara koshish karein!",
+      "number_1": "Pehla number linkhein : ",
+      "number_2": "Doosra number linkhein : ",
+      "operation_prompt": "Darjzail ikhtyaraat mein say kisi ek ka intikhaab karein.\n1)Jama (+)\n2)Munfi (-)\n3)Zarb (x)\n4) Taqseem (/)\n(Aap ya tou intikhaabi ikhtiyaar ka number likh sakte hain ya alamat, misaal kay taur par Jama kayliye 1 or +) : ",
+      "invalid_operation": "Ghalat intikhaab, dobara koshish karein!",
+      "another_operation": "Aapko dobara hisaab karna? (y/n) ",
+      "result": "Aapka jawab hai {answer}"
+    }
+  }

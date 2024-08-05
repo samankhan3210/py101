@@ -1,0 +1,9 @@
+{
+    "welcome" : "\n ----- Welcome to the game of Rock, Paper, and Scissors ----- \n",
+    "user_prompt" : "Choose one from {CHOICES}",
+    "u_win": "Please Enter the Annual Percentage Rate (as '%' only, for example 5 for 5% and 5.5 for 5.5%) : ",
+    "duration_years": "Please Enter the Loan Duration Year(s) : ",
+    "duration_months": "Please Enter the Loan Duration Month(s) : ",
+    "choice" : "Do you want to perform another calculation (y/n)? ",
+    "error_message" : "Incorrect Value, Try Again! "
+}

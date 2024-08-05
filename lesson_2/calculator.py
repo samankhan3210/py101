@@ -3,6 +3,13 @@ and perfroms simple calculations on them '''
 import json
 import os
 
+LANGUAGES_LIST = ['urdu', 'ur', 'u', '1', '2', 'en', 'e', 'english']
+CHOICE_OPTIONS = ['y', 'yes', 'yep', 'n', 'no', 'nope']
+VALID_CALCULATION_OPTIONS = ["1", "2", "3", "4", "+", "-", "x", "/"]
+
+with open('calculator_messages.json', 'r', encoding='utf-8') as file:
+    MESSAGES = json.load(file)
+
 def number_validation(prompt):
     '''validates that the number is a float and not a string'''
     while True:
@@ -14,10 +21,6 @@ def number_validation(prompt):
 
     return number
 
-with open('calculator_messages.json', 'r', encoding='utf-8') as file:
-    MESSAGES = json.load(file)
-
-LANGUAGES_LIST = ['urdu', 'ur', 'u', '1', '2', 'en', 'e', 'english']
 while True:
     LANGUAGE = input(MESSAGES['lang'])
     if LANGUAGE.lower() not in LANGUAGES_LIST:
@@ -30,12 +33,13 @@ while True:
         break
 
 while True:
+    os.system('cls')
     number1 = number_validation(MESSAGES[LANGUAGE]['number_1'])
     number2 = number_validation(MESSAGES[LANGUAGE]['number_2'])
     while True:
         operation = input(MESSAGES[LANGUAGE]['operation_prompt'])
 
-        if operation in ["1", "2", "3", "4", "+", "-", "x", "/"]:
+        if operation in VALID_CALCULATION_OPTIONS:
             break
 
         print(MESSAGES[LANGUAGE]['invalid_operation'])
@@ -55,12 +59,10 @@ while True:
 
     OUTPUT = round(OUTPUT, 2)
     print(MESSAGES[LANGUAGE]['result'].format(answer=OUTPUT))
-    choice_options = ['y', 'yes', 'yep', 'n', 'no', 'nope']
     while True:
         choice = input(MESSAGES[LANGUAGE]['another_operation'])
         choice = choice.lower()
-        os.system('cls')
-        if choice not in choice_options:
+        if choice not in CHOICE_OPTIONS:
             print(MESSAGES[LANGUAGE]['invalid_number'])
         else:
             break

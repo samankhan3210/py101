@@ -21,7 +21,7 @@ def prompt_language():
         language = input(MESSAGES['lang'])
         if language.lower().strip() not in LANGUAGES_LIST:
             error_message()
-        else: 
+        else:
             if language.lower().strip() in ['urdu', 'ur', 'u', '1']:
                 language = 'ur'
             else:
@@ -60,10 +60,10 @@ def prompt_operation(lang = 'en'):
     '''asks user for type of calculation'''
     while True:
         operation = input(MESSAGES[lang]['operation_prompt'])
-        if operation in VALID_CALCULATION_OPTIONS:
-            break
-        else:
+        if operation not in VALID_CALCULATION_OPTIONS:
             error_message(lang)
+        else:
+            break
     if operation in ["1", "+"]:
         operation = '+'
     elif operation in ["2", "-"]:
@@ -111,7 +111,7 @@ def calculate(num1, num2, op):
     else:
         answer = division(num1, num2)
 
-    if type(answer) == 'float':
+    if isinstance(answer, float):
         answer = round(answer, 2)
     return answer
 
@@ -128,6 +128,7 @@ def prompt_use_again(lang = 'en'):
     return choice[0]
 
 def main():
+    '''main function'''
     language = prompt_language()
     welcome(language)
     while True:

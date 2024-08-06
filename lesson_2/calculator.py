@@ -4,7 +4,8 @@ import json
 import os
 
 LANGUAGES_LIST = ['urdu', 'ur', 'u', '1', '2', 'en', 'e', 'english']
-CHOICE_OPTIONS = ['y', 'yes', 'yep', 'n', 'no', 'nope', 'jee', 'nahi']
+CHOICE_OPTIONS_EN = ['y', 'yes', 'yep', 'n', 'no', 'nope']
+CHOICE_OPTIONS_UR = ['jee', 'nahi']
 VALID_CALCULATION_OPTIONS = ["1", "2", "3", "4", "+", "-", "x", "/"]
 
 with open('calculator_messages.json', 'r', encoding='utf-8') as file:
@@ -77,7 +78,8 @@ def prompt_operation(lang = 'en'):
 
 def display_result(n1, n2, operation, ans, lang = 'en'):
     '''displays the result of calculation'''
-    print(MESSAGES[lang]['result'].format(a=n1,
+    if not isinstance(ans, Exception):
+        print(MESSAGES[lang]['result'].format(a=n1,
                                             b=n2, op=operation, answer=ans))
 
 def addition(num1, num2):
@@ -113,6 +115,7 @@ def calculate(num1, num2, op):
 
     if isinstance(answer, float):
         answer = round(answer, 2)
+
     return answer
 
 def prompt_use_again(lang = 'en'):
@@ -120,7 +123,9 @@ def prompt_use_again(lang = 'en'):
     while True:
         choice = input(MESSAGES[lang]['another_operation'])
         choice = choice.lower().strip()
-        if choice not in CHOICE_OPTIONS:
+        if lang == 'en' and choice not in CHOICE_OPTIONS_EN:
+            error_message()
+        elif lang == 'ur' and choice not in CHOICE_OPTIONS_UR:
             error_message()
         else:
             break
@@ -142,5 +147,6 @@ def main():
             break
         os.system('cls || clear')
     goodbye(language)
+
 if __name__ == "__main__":
     main()

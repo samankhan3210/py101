@@ -55,7 +55,7 @@ def grand_winner():
 
 AGAIN = "y"
 while AGAIN.lower() in YES_OPTIONS :
-    os.system('cls')
+    os.system('cls || clear')
     user_choice = input(f'Choose one from - {", ".join(COMBINED_CHOICES)} : ')
     user_choice = user_choice.lower()
     while user_choice not in CHOICES:

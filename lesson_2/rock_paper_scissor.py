@@ -3,10 +3,6 @@ import random
 
 CHOICES = ['rock', 'paper', 'scissors', 'lizard', 'spock']
 CHOICES_SHORTENED = ['r', 'p', 'sc', 'l', 'sp']
-SCORES = {
-    'user' : 0,
-    'computer' : 0
-}
 MAX_SCORE = 3
 MAX_ROUNDS = 5
 WINNING_COMBOS = {
@@ -54,51 +50,55 @@ def determine_round_winner(ur_choice, comp_choice):
         decission = "Computer wins!"
     return decission
 
-def update_winner_score(win):
+def update_winner_score(win, score):
     '''increments the score of the winner based on the decision'''
     if win == "You win!":
-        SCORES['user'] += 1
+        score['user'] += 1
     elif win == "Computer wins!":
-        SCORES['computer'] += 1
+        score['computer'] += 1
     else:
         pass
 
-def print_scores():
+def print_scores(score):
     '''prints game scores'''
-    print(f"Your Score = {SCORES['user']}\nComputer's Score = {SCORES['computer']}\n")
+    print(f"Your Score = {score['user']}\nComputer's Score = {score['computer']}\n")
 
-def print_grand_winner():
+def print_grand_winner(score):
     '''prints a message for the user whether he/she is a grand winner or not'''
-    if SCORES['user'] == MAX_SCORE  or SCORES['user'] > SCORES['computer']:
+    if score['user'] == MAX_SCORE  or score['user'] > score['computer']:
         print("CONGRATULATIONS! YOU ARE THE GRAND WINNER. :)")
-    elif SCORES['computer'] == MAX_SCORE or SCORES['computer'] > SCORES['user'] :
+    elif score['computer'] == MAX_SCORE or score['computer'] > score['user'] :
         print("ALAS! COMPUTER IS THE GRAND WINNER. :(")
     else:
         print('--- IT IS A TIE! :) ---')
 
-def best_of_five(round_no):
+def best_of_five(round_no, score):
     '''checks whether 5 rounds have comepleted or any user has reached a score of 3'''
-    return SCORES['computer'] != MAX_SCORE and SCORES['user'] != MAX_SCORE \
+    return score['computer'] != MAX_SCORE and score['user'] != MAX_SCORE \
         and round_no != MAX_ROUNDS
 
 def main():
     '''main function'''
     round_number = 0
     welcome()
-    while best_of_five(round_number):
+    score = {
+    'user' : 0,
+    'computer' : 0
+    }
+    while best_of_five(round_number, score):
         print(f"\n---- Round - {round_number + 1} ----")
         your_choice = get_user_choice()
         computer_choice = random.choice(CHOICES)
         print(f"Your choice = {your_choice}\nComputer's choice = {computer_choice}")
         winner = determine_round_winner(your_choice, computer_choice)
         print(winner)
-        update_winner_score(winner)
+        update_winner_score(winner, score)
         round_number += 1
-        print_scores()
+        print_scores(score)
 
     print("---- FINAL SCORES ----")
-    print_scores()
-    print_grand_winner()
+    print_scores(score)
+    print_grand_winner(score)
     goodbye()
 
 if __name__ == "__main__":
